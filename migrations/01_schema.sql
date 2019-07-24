@@ -19,12 +19,13 @@ CREATE TABLE properties(
   thumbnail_photo_url TEXT, 
   cover_photo_url TEXT,
   cost_per_night INTEGER, 
-  street INTEGER, 
-  parking_spaces SMALLINT, 
-  number_of_bathroooms SMALLINT, 
-  number_of_bedrooms SMALLINT, 
+  street TEXT, 
+  parking_spaces INTEGER, 
+  number_of_bathrooms INTEGER, 
+  number_of_bedrooms INTEGER, 
   country TEXT,
-  province TEXT, 
+  city TEXT,
+  provence TEXT, 
   post_code TEXT, 
   active BOOLEAN default false
 );
