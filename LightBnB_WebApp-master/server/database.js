@@ -15,18 +15,37 @@ const pool = new Pool({
  * @param {String} email The email of the user.
  * @return {Promise<{}>} A promise to the user.
  */
+// const getUserWithEmail = function (email) {
+//   return pool.query(`
+//   SELECT * FROM users
+//   WHERE email LIKE $1;
+//   `, [email]).then(res => {
+//     if (res.rows) {
+//       console.log(res.rows[0]);
+//       return res.rows[0];
+//     } else {
+//       return null;
+//     }
+//     // return res.rows[0];
+//   })
+//     .catch(err => console.error('query error', err.stack));
 const getUserWithEmail = function (email) {
-  let user;
-  for (const userId in users) {
-    user = users[userId];
-    if (user.email.toLowerCase() === email.toLowerCase()) {
-      break;
-    } else {
-      user = null;
-    }
-  }
-  return Promise.resolve(user);
-}
+  const getUserWithEmailQuery = `
+ SELECT * FROM users
+ WHERE email LIKE $1
+ ;`;
+  return pool.query(getUserWithEmailQuery, [email])
+    .then(res => {
+      if (res.rows[0]) {
+        return res.rows[0];
+      } else {
+        return null;
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
 exports.getUserWithEmail = getUserWithEmail;
 
 /**
@@ -35,8 +54,21 @@ exports.getUserWithEmail = getUserWithEmail;
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithId = function (id) {
-  return Promise.resolve(users[id]);
-}
+  // return Promise.resolve(users[id]);
+  return pool.query(`
+  SELECT * FROM users
+  WHERE id = ${id}
+  `).then(res => {
+    if (res.rows[0]) {
+      return res.rows[0];
+    } else {
+      return null;
+    }
+  })
+    .catch(err => {
+      console.log(err);
+    });
+};
 exports.getUserWithId = getUserWithId;
 
 

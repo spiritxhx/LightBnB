@@ -1,7 +1,7 @@
 module.exports = function (router, database) {
 
   router.get('/properties', (req, res) => {
-    console.log('query message:' + JSON.stringify(req.query));
+    // console.log('query message:' + JSON.stringify(req.query));
 
     database.getAllProperties(req.query, 20)
       .then(properties => res.send({ properties }))
